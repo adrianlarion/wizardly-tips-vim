@@ -1,4 +1,4 @@
-# A.B.U.V.T - Arcane But Useful Vim Tips
+# Less Known But Useful Vim
 A fast way to benefit from vim's power. Ideally you should read a good book and the `:h` section. But if you're in a hurry this should serve you well.
 This is a list of somewhat unknown but highly useful Vim tips and tricks. I try and keeep the list succint by not showing well known or less useful commands.
 
@@ -39,6 +39,12 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 
 
 
+`<C-m><CR>` - type Ctrl+M followed by Enter. `<CR>` is Carriage Return (another word for Enter key)
+
+
+
+
+
 
 
 ###### Find files and send them to vim.
@@ -54,6 +60,7 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 
 ###### Encrypt
 * You decide to write your secret journal using vim. Trouble is - anyone can read your unencrypted text files. Or can they? By using `vim -x mysecretfile.txt` you use encryption on file. You'll be asked for a key (password) to encrypt/decrypt your file. Warning - if you forget your key bye bye file. 
+- HINT - you can also encrypt a file after you open it by typing `:X`
 
 
 
@@ -69,7 +76,7 @@ Here's how it works
 - No do your desired operations. `i<<Esc>ea>` which will insert the bracket, then to normal mode, go te end of the word, append the closing bracket. 
 - next you copy the whole bracketed foo by pressing `ya>` (yank all in between brackets) followed by `$p` (go to end of teh line and paste)
 - Your work is done. You press `q` to stop recording. 
-- time for PAYBACK B*TCH...ah, I meant PLAYBACK. 
+- time for PAYBACK B**CH (to quote Jesse Pinkman)...ah, I meant PLAYBACK. 
 - you press `@a` to playback the contents of register `a` (into which you recorded your actions). You watch amazed how vim repeats "smartly" the operations you just performed previously. 
 - Now you can press `@@` to repeat the previous playback as many times as you want. Or you could press `10@@` to repeat the playback for 10 times. Or if you want this applied to your whole file type `:% norm @a` - which means - apply the macro to all lines.
 
@@ -91,7 +98,7 @@ Here's how it works
 
 
 ###### Enter special chars
-* Enter digraphs (speciar chars). Use `<C-k>` in Insert mode and type the digraph code. For example you can enter the pound sign using 'Pd' (£). Type `:h  digraph-table` for a list of digraph codes.
+* Enter digraphs (speciar chars). Use `<C-k>` in Insert mode and type the digraph code. For example you can enter the pound sign using 'Pd' (£). Type `:h  digraph-table` for more info. To just view the codes type `:dig`
 
 
 
@@ -158,7 +165,71 @@ Here's how it works
 * `gv` repeat last visual selection.
 
 
+##### Paste word under cursor
+* You're in ex mode, trying to write a complex search & replace command. You want to search for the word "Supercalifragilisticexpialidocious" and replace it with "Super". Your fingers go on strike before you even start. What to do?. Well, assuming your cursor is on the said word you can paste that word in ex mode by typing `<C-r><C-w>`. This will paste the word under the cursor. 
+- this is also useful when you haver words with tricky spelling.
+
+
+###### Create and use abbreviation.
+* You're documenting your code. It's a mess. You need to use separators to make things clearer. You decide to use a long string, like `#--------------------------------------------------`. Typing it every time it's cumbersome and you will probably not get the amount of dashes right every time. 
+What to do?
+You could yank it in a register and paste it. But I think there's another, more flexible way.
+You use abbreviations. Type:
 
 
 
 
+`ab sep #-----------------------------------------------<CR>`
+
+
+
+
+now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted. 
+
+- HINT - to clear abbreviations type `:abc`
+
+
+
+###### List words under cursor.
+* You're hard at work debugging your code. You left clues in form of comments containing the word "debug" - eg "#debug this or you'll get fired". You're somewher in teh middle of the file but how many more lines containing the word "debug" are there?
+- with the cursor over the word "debug" (or any other word) from Normal mode type `]I`. A list will appear at the bottom containing all lines containing the word under cursor, starting from the current line position. If you want the search to start from the beginning of the file (instead of curent line) type `[I`
+- you can use this cool function for quickly displaying lines containing error codes, certain strings, etc. 
+
+
+##### Pattern searching tricks
+* `/debug/1` - goes to the line below the line containing teh pattern "debug". use another number for a negative offset or a larger offset. eg: `/debug/-4` -  4 lines above the line containing the debug pattern.
+* `/debug/e+1` - go to +1 char after the end of pattern "debug". eg: "debug3" will put the cursor on "3"
+* `/debug/b+3` - go to +3 chars after the beginning of pattern debug. In this case the cursor will be on "u" (not 'b' because counting starts at 0, where 0 char is the first char, in this case 'd')
+* If later you decide you need another offset use `//e+10` - where 'e+10' is your new offset but using the old seach pattern.
+
+
+#####  Use expression register to store and iterate
+* You have a piece of code with the following word repeated 10 times: `var a1=42`. You want to have `var a1=42`, `var a2=42`, etc until `var a10=42`. How could you do that? By hand? NOOO.
+* First set a variable to 0. `:let i=0`
+* Now start to record a macro `qa` (record in register "a")
+* Find your desired value using `/\va1/e`. The `/e` tells vim to place the cursor at the end of the patter, in this case on the digit `1`. Note that we're using `/\v` to signal vim to use 'very magic' (which means we don't have to escape certain special chars)
+* Now for the magic. Start by incrementing teh variable i. `:let i += 1` (spaces are important)
+* press `s` to enter insert mode and delete the digit `1` at the same time.
+* And now insert the value of `i` using the expression register. `<C-r>=i` (which will just echo the value of i and place it at cursor)
+* Stop recording with `q`
+* Apply the macro to all lines using `% norm @a` (on all lines eecute macro stored in 'a' register)
+* DONE.
+
+
+#####  Save and load your sessions.
+* You are immersed into a highly complex editing session. You have log files, scripts, documentation and other files, all open in windows and tabs. Suddenly there's a computer crash. You open vim again but now you have to re-open all those files by hand (and place them in their various locations and windows). That sucks. 
+* Instead you can simply save your session. Type `:mks mysession` (where myssesion is your session file) to save your session to a file. Next time you boot up vim use `vim -S mysession` to load your session.
+* Or do it directly from vim. `:so mysession`
+
+
+
+#####  Go back in history.
+* You edit a bunch of files. After a couple of months you need to change  them again. Trouble is, you don't remember exactly what files you edited. 
+* Type `:ol` and vim will show you your history (of file edits).
+* To open one of these files type `:bro :ol` and choose a number coresponding to the desired file.
+
+
+
+#####  Go back to the line you last edited
+* You start editing a file. Suddenly the phone calls. Your cat has won the lottery. After you collect the prize and buy the cat some toys you come back. You want to resume your work but you don't remember the exact line you were in. The file name it's also vague. What do you do?
+* You type "'0" (backtick followed by zero). Vim will open the last edited file on the exact line you left it.
