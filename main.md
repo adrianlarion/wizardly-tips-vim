@@ -11,10 +11,30 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 
 
 # HOW TO READ SHORTCUTS:
+
+
+
+
 `<C-g>` - means Ctrl+G
+
+
+
+
 `g<C-g>` - means press g then press Ctrl+g
+
+
+
+
 `<S-g>` - means press SHift+g
+
+
+
+
 `<C-Z>` - means Ctrl+Shift+Z (Shift is not shown but implied since we have an uppercase Z)
+
+
+
+
 `<zZ>` - z followed by Shift+Z
 
 
