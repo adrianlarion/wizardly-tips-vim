@@ -1,4 +1,4 @@
-# Less Known But Useful Vim
+# Wizardly Tips Vim
 A fast way to benefit from vim's power. Ideally you should read a good book and the `:h` section. But if you're in a hurry this should serve you well.
 This is a list of somewhat unknown but highly useful Vim tips and tricks. I try and keeep the list succint by not showing well known or less useful commands.
 
@@ -232,4 +232,71 @@ now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted
 
 #####  Go back to the line you last edited
 * You start editing a file. Suddenly the phone calls. Your cat has won the lottery. After you collect the prize and buy the cat some toys you come back. You want to resume your work but you don't remember the exact line you were in. The file name it's also vague. What do you do?
-* You type "'0" (backtick followed by zero). Vim will open the last edited file on the exact line you left it.
+* You type "`0" (backtick followed by zero). Vim will open the last edited file on the exact line you left it.
+
+
+
+##### Terminal inside vim
+* You have 2 scripts and a config file open in separate windows. It's all good. But you need to run some quick commands in the terminal. Oh no. You don't want to leave the warm bossom of Vim. What to do?
+* You could press `<C-z>` and put Vim in background (which will open a terminal). Then you could type `fg` in terminal to get back to vim.
+* Or you could type `:sh` to open a shell temporarily and hide vim. When you're done you could press `exit` and get back to vim.
+* But all these options aren't exactly what you want. You want the terminal, true, but you also need to view and edit your files **at teh same time**.
+* You type `:ter` and a terminal opens alongside your open windows. Yay! When you're done just type `exit` in the terminal.
+
+
+#####  Persistent undo
+* Wouldn't it be cool to be able to undo your changes **after** you reopen your file? In vim this is quite easy to do. 
+* Start by creating a dir where you want your undo info to go. Here's a good choice `~/.vim/undo-dir`
+* Add the following two lines to your `.vimrc` (located usually at `~/.vimrc`:
+```
+set undodir=~/.vim/undo-dir
+set undofile
+```
+
+#### Load teh previous ex command
+* You type a complex ex command. Later you want that command again. One option would be to use the arrow keys and cycle through history. That works but takes your hands from the home row position. 
+* Another way to load last ex command is `:<C-r>:`. That is: start by tyying colon, press Ctrl+R and type colon again. Colon is a register storing your last ex command. Ctrl+R outputs the contetns of a register.
+
+
+#### Append your registers.
+* You open two important  documents. From one you start yanking important lines in a register. You go to the second document and paste but realize you missed a couple of lines. Damn. Now you have to yank all the lines and the ones you missed.
+* Or do you? Instead you can just append to the register in which you yanked. Simply yank in the uppercase version of the register and you will append (eg: if you yanked in `a` now you append by yanking in `A`
+
+
+#### Range shortcut
+* Press `5:` and vim will type for you in the ex command line `:.,.+4` 
+
+
+#### Visual Block Syntax
+* If you've used Vim for a while you know you can edit multiple lines at a time. Use Visual Block `<C-v>`, use a motion `3j`, insert some text `IHelloWorld` and press `<Esc>`. BAM! Your inserted text is typed on all lines. 
+* But here's the real trick which few people know. Let's say that your vertical line spans some short lines. Eg:
+```
+I'm a long line, very vory long, YEAH.
+Shory.
+I'm a long line, very vory long, YEAH.
+```
+* You start the visual block let' say on the word 'YEAH' and it spans the whole 3 lines. If you use `I` and insert text the short line will remain empty (where it was empty space it'll still be empty space). But if you use `A` (append) then you'll also type text in the empty line. Pretty neat, eh? 
+* In order to remember think that `A` Append always writes text. 
+
+
+#### Quickly run an external command
+* It's coo to be able to run external terminal commands with `:%!sort` which passes all lines to sort and writes back the output. But there's a neat trick that will save you some time:
+* `!5G` - will start writting an ex command that looks like `:.,+4!`. You then will type your desired program `sort` and press enter. You start with `!` and then specify a motion from the current line `5G`. You can use other ranges, like `!4j` which will sort the following 4 lines from your current line.
+* An even faster shortcut is `!!`. This will pass the current line to the external program (and replace it with teh output). A known use case of this is to quickly insert a timestamp into your document `!!date`
+
+
+#### Replace with confirmation
+* You have document. In it you have a variable called "money". You want to rename it to "cash" but only for certain cases. In that case you should type: `:%s/\v<money>/cash/gc`.  This long winded command uses very magic `\v` so that you won't have to escape `<>`. Those chars mark teh beginning and end of a word. We use them because you presumably want to replace only the instance of "money" and not "zamoney" or "moneys".  Finally the `c` flag will prompt a confirmaton dialogue each time an entry is found.
+* HINT - use `<C-e>` and `<C-y>` to scroll up and down so you can better see the context during the replace confirm dialogue.
+
+
+#### Documentation at your fingertips
+* You're editing a bash file. You read the output from `find` and for each result you want to run an external script. You decide to use `xargs` instead of `-exec {} \;`. But as you write your command you find that you're rusty on xargs arguments. What to do?
+* You could put vim in foreground `<C-z>`, `man xargs`, `fg`. Or you could open a terminal inside vim with `:ter`, check teh docs then close the window with `<C-c>`. 
+* But there are 2 better ways to do this.
+* Just press `K` (Shift+k) on the keyword you're interested in and Vim will open the relevant man page. If it's another type of file (not bash) vim will also try to find the help for that particular keyword. For example you could put your cursor on `pow()` in a python file, type `K` and vim will show you the docs. Pretty cool, eh? One keystroke and the docs are open! AWESOME!
+* But there's more. There is a filetype plugin which gives you an enhanced version of man. First install it with `:runtime! ftplugin/man.vim` (put it in your .vimrc if you want it open at startup).
+* Now type `:Man xargs`. Vim will open teh manual page inside vim in a separate window. That's cool and it save you the hassle of opening a terminal by hand and typing man inside it. 
+* That's cool but it's just half of the gooodness. The other half is this. Inside this man window put your curosr on a keyword. Now press either `\K` (backward slash followed by Shift+k) or `<C-]>`. If there exists a man for that keyword it will open inside the same page. Like a browser. THis functionality is NOT present in the default man pages. You can navigate back and forth with `<C-o>`, `<C-i>`
+* And for a last tip - you can use `\K` inside vim too on a keyword. Then vim will open the new and improved man page instead of the default documentation (whith opens with `K`)
+* BUT NOTE! the `:Man` command works only for man pages for linux, not other programming languages. That is if you press `\K` on 'pow' inside a python file you will get the man page for 'POW(3)' (linux programmer manual) and not python.
