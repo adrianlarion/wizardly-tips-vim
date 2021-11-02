@@ -55,6 +55,7 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 * find files and open the results in vim. While in vim you can press `<gf>` to open a file (from the results provided by find) in vim. 
 - HINT: if your file has spaces vim will complain that the file is not in the path. This happens because it truncates the file when a space appears, thus trying to reach the file at an erroneous path. So instead use `<S-V>` to select the hole line and then press `<gf>` 
 - HINT2 - you can use any other command that outputs to stdout and send it to vim. 
+- HINT3 - you can open the file under cursor in a new window with `<C-w>f`
 
 
 
@@ -103,7 +104,7 @@ Here's how it works
 
 
 ###### Quickly write buffer to disk
-* `<ZZ>`  - write the buffer to disk if modified and exit. I bet you didn't knew that - I didn't until very recently. 
+* `<ZZ>`  - write the buffer to disk if modified and exit. I bet you didn't knew that - but if you did BRAVO, you know how to quit Vim! 
 
 
 
@@ -300,3 +301,59 @@ I'm a long line, very vory long, YEAH.
 * That's cool but it's just half of the gooodness. The other half is this. Inside this man window put your curosr on a keyword. Now press either `\K` (backward slash followed by Shift+k) or `<C-]>`. If there exists a man for that keyword it will open inside the same page. Like a browser. THis functionality is NOT present in the default man pages. You can navigate back and forth with `<C-o>`, `<C-i>`
 * And for a last tip - you can use `\K` inside vim too on a keyword. Then vim will open the new and improved man page instead of the default documentation (whith opens with `K`)
 * BUT NOTE! the `:Man` command works only for man pages for linux, not other programming languages. That is if you press `\K` on 'pow' inside a python file you will get the man page for 'POW(3)' (linux programmer manual) and not python.
+
+#### Input/output with external commands.
+1. `:!date` - execute date command and print the results 
+2. `:r !date` - execute date command and append the output after range last line. If no range provided use current line. Thus the results from date will be appended after the current line in our case.
+3. `:w !date` - send all the lines as stdin to date command. Print the results (no insertion into current buffer)
+4. `:1,3!date` send lines 1 to 3 as stdin to date command. Replace the lines in range (1,3) with output from date.
+
+
+
+#### Put each word on a new line
+* Put all words from a line on a new line. eg: "hello world of vim" will be: "hello\n world\n of\n vim\n". How? With `:.!xargs -n1`. It says: send current line as stdin to xargs. You, xargs, split the line into args separated by blank space and `echo` at most one word. Then put the xargs output in place of the line. Since the output from xargs contains newlines this creates extra lines.
+* You could alos use a range, to put each word on the lines in range on a new line with `:1,5!xargs -n1`
+* NOTE - xargs separates words by spaces. Vim has a default different way of separating words which may or may not corespond with xargs. (see `:h isk`
+
+
+#### Buffer delete
+* As you know buffers are usually contents of files loaded in memory, with extra info attached to them (marks, registers, etc). 
+* Let's say you decide to delete some buffers with `:bdel myverylongfile`. 5 minutes later you need again the buffer you deleted. Darn. What to do? You could try and remember the filename and reopen it. But what if there were lots of buffers you deleted and they havo complicated names?
+* Vim it's here to help you. Just type `:ls!` to show all buffers, even [u]nlisted ones. You'll see your deleted buffer listed (they'll have a 'u' indicator in front of them for unlisted). Turns out deleting a buffer makes it unlisted. 
+* If you really, really want to delete a buffer use `:bwipe`. 
+
+
+#### Autocomplete with files/lines
+* You're editing a file. You have separator comments for sections, like `#DEBUG---------------------`. At some time you would like to insert that line into your current text. You could use a register but what if you have lots of types of separator comments (DEBUG, WIP, STABLE,etc)? Here's a better way:
+* Type `<C-x><C-l>` (Ctrl+x, Crl+l). The autocomplete will show you whole lines and you can choose your separator comment line. (in Insert mode)
+* <C-x><C-f>  will show you autocomplete options from the files in current directory. Quite cool.  (in Insert mode)
+* After the autocomplete list appears you can cycle through it with `<C-n>` or `<C-p>`. 
+* But here's an even crazier thingie - you can start typing an existing path and Vim will try and autocomplete it. Eg: you have typed `/` and are still in Insert mode. Type `<C-x>,<C-f>` and a list of dirs under root dir will appear. Cycle through them with `<C-n>` or `<C-p>`. If you want to go deeper you can't press Space because that will just enter that dir/file and a space afterwards. INstead press `<C-x>,<C-f>` and you will have inserted that dir/file name and will go one level deeper (to the next forward  slash) where you can cycle through the next options.
+* You can use the above feature in combination with `gf` or `<C-w>f`  to open the files under cursor in vim. Very flexible.
+
+
+#### Repeat your insert
+* You start editing a file. You type rather long text containing a copyright comment. You enter Normal mode, you jump to the end of the file and see that you will have to enter the same line again (for some reason). 
+* Enter insert mode and press `<C-a>` - it'll insert the text you previously typed in Insert mode. 
+
+#### Better wrap
+* After you set up the wrap option `:se wrap` you notice that words may be cut of in the middle at end of screen. Like so:
+```
+hello wo
+rld of v
+im
+```
+* Use `:se linebreak` and have the words not cut of in the middle:
+```
+hello 
+world of 
+vim
+```
+
+
+#### Count patterns
+* You're editing some source code left to you by your predecesor. It's messy. That fellow used to abbreviate troublesome variables with 'dbg_', like 'dbg_count', 'dbg_class', etc. Just how many of these variables are there? 
+* You can search for them with teh substitute command. Shocking, I know. Check it out: `:%s/<dbg_//gni`.
+* This means: on all lines search for `<dbg_` (word start followed by 'dbg_'), replace with nothing (you could put a '&' but it's not needed), and use the following flags: g for global, i for case insensitive and n for no substitution. The 'n' flag is the trick here. It just prints how many matches there are without actually performing substitution.bbbbbbbbbbbbbbbbbbb
+
+
