@@ -159,7 +159,7 @@ Here's how it works
 * You search for various keywords in your code. After a while you want to search for some of those keywords again but you don't remember them exactly. No worries. Just press `q/` and you'll open a small window at the bottom containing your searches. Navigate with `jk` and press <CR> (Enter) to repeat the selected search. Or just close that window with `:q`
 
 
-##### Useful selection of g commands
+### Useful selection of g commands
 * `gf` open file under cursor
 * `g;`traverse forward through the change list (for example after you edit in Insert mode)
 * `g,`traverse backward through the change list
@@ -170,7 +170,7 @@ Here's how it works
 * `gv` repeat last visual selection.
 
 
-##### Paste word under cursor
+### Paste word under cursor
 * You're in command  mode, trying to write a complex search & replace command. You want to search for the word "Supercalifragilisticexpialidocious" and replace it with "Super". Your fingers go on strike before you even start. What to do?. Well, assuming your cursor is on the said word you can paste that word in  mode by typing `<C-r><C-w>`. This will paste the word under the cursor. 
 - this is also useful when you have words with tricky spelling.
 
@@ -235,13 +235,13 @@ now in Insert mode type `sep` and press `Tab`. Your long separator is inserted. 
 
 
 
-#####  Go back to the line you last edited
+###  Go back to the line you last edited
 * You start editing a file. Suddenly the phone calls. Your cat has won the lottery. After you collect the prize and buy the cat some toys you come back. You want to resume your work but you don't remember the exact line you were in. The file name it's also vague. What do you do?
 * You type "`0" (backtick followed by zero). Vim will open the last edited file on the exact line you left it.
 
 
 
-##### Terminal inside vim
+### Terminal inside vim
 * You have 2 scripts and a config file open in separate windows. It's all good. But you need to run some quick commands in the terminal. Oh no. You don't want to leave the warm bossom of Vim. What to do?
 * You could press `<C-z>` and put Vim in background (which will open a terminal). Then you could type `fg` in terminal to get back to vim.
 * Or you could type `:sh` to open a shell temporarily and hide vim. When you're done you could press `exit` and get back to vim.
@@ -249,7 +249,7 @@ now in Insert mode type `sep` and press `Tab`. Your long separator is inserted. 
 * You type `:ter` and a terminal opens alongside your open windows. Yay! When you're done just type `exit` in the terminal.
 
 
-#####  Persistent undo
+###  Persistent undo
 * Wouldn't it be cool to be able to undo your changes **after** you reopen your file? In vim this is quite easy to do. 
 * Start by creating a dir where you want your undo info to go. Here's a good choice `~/.vim/undo-dir`
 * Add the following two lines to your `.vimrc` (located usually at `~/.vimrc`:
