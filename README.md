@@ -184,12 +184,12 @@ You use abbreviations. Type:
 
 
 
-`ab sep #-----------------------------------------------<CR>`
+`iab sep #-----------------------------------------------<CR>`
 
 
 
 
-now in Insert mode type `sep` and press `Tab`. Your long separator is inserted. 
+now in Insert mode type `sep` and press `Tab`. Your long separator is inserted. By using `:iab` you only create abbreviations for Insert mode and keep the other modes clean.
 
 - HINT - to clear abbreviations type `:abc`
 
