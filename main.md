@@ -72,7 +72,7 @@ Here's how it works
 - press `qa` to start recording your actions into register `a`
 - Perform some actions that you want repeated. Here's a very useful example for coders - custom line by line editing. Let's say that you need to go line by line, search for the word "foo" and place it in tags (<foo>) and place those tags again on the same line at the end of the line.
 - This is a pretty complex scenario. Doing it by hand for thousands of lines it's PITA (Pain In The A*s). What can you do? Write an awk script? A Python script? NOOOOO. You use vim register playback.
-- So you start your action by implementing a movement that will go to the next line or the next pattern. This is very important because it will make the playback "smart", as it will go on teh next line or pattern and do the work.
+- So you start your action by implementing a movement that will go to the next line or the next pattern. This is very important because it will make the playback "smart", as it will go on the next line or pattern and do the work.
 - In your case you would start by typing  `/foo` and pressing `<CR>` (Enter). This takes care of always finding the next pattern and working on it.
 - No do your desired operations. `i<<Esc>ea>` which will insert the bracket, then to normal mode, go te end of the word, append the closing bracket. 
 - next you copy the whole bracketed foo by pressing `ya>` (yank all in between brackets) followed by `$p` (go to end of teh line and paste)
@@ -120,7 +120,7 @@ Here's how it works
 
 
 ###### Insert mode navig
-* While in insert mode press `<C-h>` to backspace a char, `<C-w>` to delete a word backwards, `<C-u>` to delete until teh beginning of the line (all without leaving Insert mode)
+* While in insert mode press `<C-h>` to backspace a char, `<C-w>` to delete a word backwards, `<C-u>` to delete until the beginning of the line (all without leaving Insert mode)
 
 
 
@@ -138,7 +138,7 @@ Here's how it works
 
 
 ###### Repeat Insert
-* Everyone knows that you can insert a character repeatedly using a command such as `20i-<Esc>` - which will insert 20 '-'. Or you could do something like `10aHello World Of Vim.<Esc>`. This will do 10 appends of teh phrase 'Hello World Of Vim'
+* Everyone knows that you can insert a character repeatedly using a command such as `20i-<Esc>` - which will insert 20 '-'. Or you could do something like `10aHello World Of Vim.<Esc>`. This will do 10 appends of the phrase 'Hello World Of Vim'
 
 
 
@@ -192,13 +192,13 @@ now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted
 
 
 ###### List words under cursor.
-* You're hard at work debugging your code. You left clues in form of comments containing the word "debug" - eg "#debug this or you'll get fired". You're somewher in teh middle of the file but how many more lines containing the word "debug" are there?
+* You're hard at work debugging your code. You left clues in form of comments containing the word "debug" - eg "#debug this or you'll get fired". You're somewher in the middle of the file but how many more lines containing the word "debug" are there?
 - with the cursor over the word "debug" (or any other word) from Normal mode type `]I`. A list will appear at the bottom containing all lines containing the word under cursor, starting from the current line position. If you want the search to start from the beginning of the file (instead of curent line) type `[I`
 - you can use this cool function for quickly displaying lines containing error codes, certain strings, etc. 
 
 
 ##### Pattern searching tricks
-* `/debug/1` - goes to the line below the line containing teh pattern "debug". use another number for a negative offset or a larger offset. eg: `/debug/-4` -  4 lines above the line containing the debug pattern.
+* `/debug/1` - goes to the line below the line containing the pattern "debug". use another number for a negative offset or a larger offset. eg: `/debug/-4` -  4 lines above the line containing the debug pattern.
 * `/debug/e+1` - go to +1 char after the end of pattern "debug". eg: "debug3" will put the cursor on "3"
 * `/debug/b+3` - go to +3 chars after the beginning of pattern debug. In this case the cursor will be on "u" (not 'b' because counting starts at 0, where 0 char is the first char, in this case 'd')
 * If later you decide you need another offset use `//e+10` - where 'e+10' is your new offset but using the old seach pattern.
@@ -209,7 +209,7 @@ now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted
 * First set a variable to 0. `:let i=0`
 * Now start to record a macro `qa` (record in register "a")
 * Find your desired value using `/\va1/e`. The `/e` tells vim to place the cursor at the end of the patter, in this case on the digit `1`. Note that we're using `/\v` to signal vim to use 'very magic' (which means we don't have to escape certain special chars)
-* Now for the magic. Start by incrementing teh variable i. `:let i += 1` (spaces are important)
+* Now for the magic. Start by incrementing the variable i. `:let i += 1` (spaces are important)
 * press `s` to enter insert mode and delete the digit `1` at the same time.
 * And now insert the value of `i` using the expression register. `<C-r>=i` (which will just echo the value of i and place it at cursor)
 * Stop recording with `q`
@@ -241,7 +241,7 @@ now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted
 * You have 2 scripts and a config file open in separate windows. It's all good. But you need to run some quick commands in the terminal. Oh no. You don't want to leave the warm bossom of Vim. What to do?
 * You could press `<C-z>` and put Vim in background (which will open a terminal). Then you could type `fg` in terminal to get back to vim.
 * Or you could type `:sh` to open a shell temporarily and hide vim. When you're done you could press `exit` and get back to vim.
-* But all these options aren't exactly what you want. You want the terminal, true, but you also need to view and edit your files **at teh same time**.
+* But all these options aren't exactly what you want. You want the terminal, true, but you also need to view and edit your files **at the same time**.
 * You type `:ter` and a terminal opens alongside your open windows. Yay! When you're done just type `exit` in the terminal.
 
 
@@ -254,7 +254,7 @@ set undodir=~/.vim/undo-dir
 set undofile
 ```
 
-#### Load teh previous  command
+#### Load the previous  command
 * You type a complex  command. Later you want that command again. One option would be to use the arrow keys and cycle through history. That works but takes your hands from the home row position. 
 * Another way to load last  command is `:<C-r>:`. That is: start by tyying colon, press Ctrl+R and type colon again. Colon is a register storing your last  command. Ctrl+R outputs the contetns of a register.
 
@@ -283,21 +283,21 @@ I'm a long line, very vory long, YEAH.
 #### Quickly run an external command
 * It's coo to be able to run external terminal commands with `:%!sort` which passes all lines to sort and writes back the output. But there's a neat trick that will save you some time:
 * `!5G` - will start writting an  command that looks like `:.,+4!`. You then will type your desired program `sort` and press enter. You start with `!` and then specify a motion from the current line `5G`. You can use other ranges, like `!4j` which will sort the following 4 lines from your current line.
-* An even faster shortcut is `!!`. This will pass the current line to the external program (and replace it with teh output). A known use case of this is to quickly insert a timestamp into your document `!!date`
+* An even faster shortcut is `!!`. This will pass the current line to the external program (and replace it with the output). A known use case of this is to quickly insert a timestamp into your document `!!date`
 
 
 #### Replace with confirmation
-* You have document. In it you have a variable called "money". You want to rename it to "cash" but only for certain cases. In that case you should type: `:%s/\v<money>/cash/gc`.  This long winded command uses very magic `\v` so that you won't have to escape `<>`. Those chars mark teh beginning and end of a word. We use them because you presumably want to replace only the instance of "money" and not "zamoney" or "moneys".  Finally the `c` flag will prompt a confirmaton dialogue each time an entry is found.
+* You have document. In it you have a variable called "money". You want to rename it to "cash" but only for certain cases. In that case you should type: `:%s/\v<money>/cash/gc`.  This long winded command uses very magic `\v` so that you won't have to escape `<>`. Those chars mark the beginning and end of a word. We use them because you presumably want to replace only the instance of "money" and not "zamoney" or "moneys".  Finally the `c` flag will prompt a confirmaton dialogue each time an entry is found.
 * HINT - use `<C-e>` and `<C-y>` to scroll up and down so you can better see the context during the replace confirm dialogue.
 
 
 #### Documentation at your fingertips
 * You're editing a bash file. You read the output from `find` and for each result you want to run an external script. You decide to use `xargs` instead of `-exec {} \;`. But as you write your command you find that you're rusty on xargs arguments. What to do?
-* You could put vim in foreground `<C-z>`, `man xargs`, `fg`. Or you could open a terminal inside vim with `:ter`, check teh docs then close the window with `<C-c>`. 
+* You could put vim in foreground `<C-z>`, `man xargs`, `fg`. Or you could open a terminal inside vim with `:ter`, check the docs then close the window with `<C-c>`. 
 * But there are 2 better ways to do this.
 * Just press `K` (Shift+k) on the keyword you're interested in and Vim will open the relevant man page. If it's another type of file (not bash) vim will also try to find the help for that particular keyword. For example you could put your cursor on `pow()` in a python file, type `K` and vim will show you the docs. Pretty cool, eh? One keystroke and the docs are open! AWESOME!
 * But there's more. There is a filetype plugin which gives you an enhanced version of man. First install it with `:runtime! ftplugin/man.vim` (put it in your .vimrc if you want it open at startup).
-* Now type `:Man xargs`. Vim will open teh manual page inside vim in a separate window. That's cool and it save you the hassle of opening a terminal by hand and typing man inside it. 
+* Now type `:Man xargs`. Vim will open the manual page inside vim in a separate window. That's cool and it save you the hassle of opening a terminal by hand and typing man inside it. 
 * That's cool but it's just half of the gooodness. The other half is this. Inside this man window put your curosr on a keyword. Now press either `\K` (backward slash followed by Shift+k) or `<C-]>`. If there exists a man for that keyword it will open inside the same page. Like a browser. THis functionality is NOT present in the default man pages. You can navigate back and forth with `<C-o>`, `<C-i>`
 * And for a last tip - you can use `\K` inside vim too on a keyword. Then vim will open the new and improved man page instead of the default documentation (whith opens with `K`)
 * BUT NOTE! the `:Man` command works only for man pages for linux, not other programming languages. That is if you press `\K` on 'pow' inside a python file you will get the man page for 'POW(3)' (linux programmer manual) and not python.
@@ -402,7 +402,7 @@ vim
 * When you open vim with some files as arguments they are stored in `:args`. args are different from buffers. Buffers are all the buffers opened in memory and not necesarilly files. Args are the actual file args passed at startup. If you change the args the buffers stay untouched and viceversa. 
 * Think about `:args` as a temporary list of files which you can modify to your desire. You navigate files in args with `:next` and `:prev` (whereas you navigate buffers with `:bn` `:bp` `:bf` `:bl`). 
 * After you load vim and start editing some file you realize you have to also view some log files. What to do? 
-* One possible way is to create a new buffer with `:new`. Afterwards put into this buffer all the results from find with `:r !find /var/log -size +1M`. All the results will be placed in the new buffer, each file path on a new line. Just press `gf` on a line and vim will open teh file in a new window (and buffer). That's one approach.
+* One possible way is to create a new buffer with `:new`. Afterwards put into this buffer all the results from find with `:r !find /var/log -size +1M`. All the results will be placed in the new buffer, each file path on a new line. Just press `gf` on a line and vim will open the file in a new window (and buffer). That's one approach.
 * Another is to just run 
 ```
 :args `find /var/log -size +1M -name '*.py' \|\| true`
@@ -427,7 +427,7 @@ vim
 
 #### Count patterns
 * You're editing some source code left to you by your predecesor. It's messy. That fellow used to abbreviate troublesome variables with 'dbg_', like 'dbg_count', 'dbg_class', etc. Just how many of these variables are there? 
-* You can search for them with teh substitute command. Shocking, I know. Check it out: `:%s/<dbg_//gni`.
+* You can search for them with the substitute command. Shocking, I know. Check it out: `:%s/<dbg_//gni`.
 * This means: on all lines search for `<dbg_` (word start followed by 'dbg_'), replace with nothing (you could put a '&' but it's not needed), and use the following flags: g for global, i for case insensitive and n for no substitution. The 'n' flag is the trick here. It just prints how many matches there are without actually performing substitution.bbbbbbbbbbbbbbbbbbb
 
 
