@@ -12,6 +12,10 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 
 
 
+`<Esc>` - Escape. Usually you should press the key, not type it. When you see `ii<Esc>` you type ii and then Escape, not 'ii<Esc>` literally.
+
+
+
 
 `<C-g>` - means Ctrl+G
 
