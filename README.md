@@ -79,7 +79,7 @@ Here's how it works
 - So you start your action by implementing a movement that will go to the next line or the next pattern. This is very important because it will make the playback "smart", as it will go on the next line or pattern and do the work.
 - In your case you would start by typing  `/foo` and pressing `<CR>` (Enter). This takes care of always finding the next pattern and working on it.
 - No do your desired operations. `i<<Esc>ea>` which will insert the bracket, then to normal mode, go te end of the word, append the closing bracket. 
-- next you copy the whole bracketed foo by pressing `ya>` (yank all in between brackets) followed by `$p` (go to end of teh line and paste)
+- next you copy the whole bracketed foo by pressing `ya>` (yank all in between brackets) followed by `$p` (go to end of the line and paste)
 - Your work is done. You press `q` to stop recording. 
 - time for PAYBACK ...ah, I meant PLAYBACK. 
 - you press `@a` to playback the contents of register `a` (into which you recorded your actions). You watch amazed how vim repeats "smartly" the operations you just performed previously. 
