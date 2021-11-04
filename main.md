@@ -56,8 +56,8 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 
 
 
-* find files and open the results in vim. While in vim you can press `<gf>` to open a file (from the results provided by find) in vim. 
-- HINT: if your file has spaces vim will complain that the file is not in the path. This happens because it truncates the file when a space appears, thus trying to reach the file at an erroneous path. So instead use `<S-V>` to select the hole line and then press `<gf>` 
+* find files and open the results in vim. While in vim you can press `gf` to open a file (from the results provided by find) in vim. 
+- HINT: if your file has spaces vim will complain that the file is not in the path. This happens because it truncates the file when a space appears, thus trying to reach the file at an erroneous path. So instead use `<S-v>` to select the hole line and then press `gf` 
 - HINT2 - you can use any other command that outputs to stdout and send it to vim. 
 - HINT3 - you can open the file under cursor in a new window with `<C-w>f`
 
@@ -108,7 +108,7 @@ Here's how it works
 
 
 ###### Quickly write buffer to disk
-* `<ZZ>`  - write the buffer to disk if modified and exit. I bet you didn't knew that - but if you did BRAVO, you know how to quit Vim! 
+* `ZZ`  - write the buffer to disk if modified and exit. I bet you didn't knew that - but if you did BRAVO, you know how to quit Vim! 
 
 
 
@@ -135,7 +135,7 @@ Here's how it works
 
 
 ###### How to quit Vim
-* There are lots of famous memes about people not knowing how to quit Vim. Here's a little secret - you can quit the current buffer(if you opened just a single file) without writting to disk by pressing `<ZQ>`.
+* There are lots of famous memes about people not knowing how to quit Vim. Here's a little secret - you can quit the current buffer(if you opened just a single file) without writting to disk by pressing `ZQ`.
 
 
 
@@ -189,7 +189,7 @@ You use abbreviations. Type:
 
 
 
-now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted. 
+now in Insert mode type `sep` and press `Tab`. Your long separator is inserted. 
 
 - HINT - to clear abbreviations type `:abc`
 
