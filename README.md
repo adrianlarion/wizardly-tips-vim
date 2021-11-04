@@ -93,7 +93,7 @@ Here's how it works
 ### Open files in own tab/win
 * Your girlfriend's father comes to visit you. You want to impress him by opening a bunch of text files, each in it's own window in vim (and show him that you're very smart and tech savvy)
 - You write `vim -o f1 f2 f3 f4` to open the specified files with windows split horizontally. use `vim -O f1 f2 f3` to split them vertically. If you have lots of files and you dont want a hundred narrow windows use `vim -o5 *.txt` to open a max of 5 windows (horizontally stacked). 
-- You colud instead open them in tabs by using the same syntax `vim -p f1 f2` or `vim -p5 *.txt`
+- You could instead open them in tabs by using the same syntax `vim -p f1 f2` or `vim -p5 *.txt`
 
 
 
@@ -164,7 +164,7 @@ Here's how it works
 * `g;`traverse forward through the change list (for example after you edit in Insert mode)
 * `g,`traverse backward through the change list
 * `gi` go back to last insert position and enter insert mode, from wherever you are
-* `gf` go to file under cursor (or select the whole line with `<C-V>` if the path has spaces
+* `gf` go to file under cursor (or select the whole line with `<C-v>` if the path has spaces
 * `ga` - show char codes for char under cursor
 * `g&` repeat last `:s` on all lines (last replace command)
 * `gv` repeat last visual selection.
@@ -435,3 +435,7 @@ vim
 * This means: on all lines search for `<dbg_` (word start followed by 'dbg_'), replace with nothing (you could put a '&' but it's not needed), and use the following flags: g for global, i for case insensitive and n for no substitution. The 'n' flag is the trick here. It just prints how many matches there are without actually performing substitution.
 
 
+### Quickly edit and reload your .vimrc
+* You decide to make Vim behave exactly how you want it. You'll need to edit your .vimrc but that's alright. 
+* After you open vim you can open your .vimrc with `:e $MYVIMRC`. Easy! 
+* You've done your modification but now you want to see the effects. Just type `:so %` (source all lines) with .vimrc open and vim will source the new .vimrc.
