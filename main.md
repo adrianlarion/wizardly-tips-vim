@@ -77,7 +77,7 @@ Here's how it works
 - No do your desired operations. `i<<Esc>ea>` which will insert the bracket, then to normal mode, go te end of the word, append the closing bracket. 
 - next you copy the whole bracketed foo by pressing `ya>` (yank all in between brackets) followed by `$p` (go to end of teh line and paste)
 - Your work is done. You press `q` to stop recording. 
-- time for PAYBACK B**CH (to quote Jesse Pinkman)...ah, I meant PLAYBACK. 
+- time for PAYBACK ...ah, I meant PLAYBACK. 
 - you press `@a` to playback the contents of register `a` (into which you recorded your actions). You watch amazed how vim repeats "smartly" the operations you just performed previously. 
 - Now you can press `@@` to repeat the previous playback as many times as you want. Or you could press `10@@` to repeat the playback for 10 times. Or if you want this applied to your whole file type `:% norm @a` - which means - apply the macro to all lines.
 
@@ -94,7 +94,7 @@ Here's how it works
 
 
 ###### Info
-* The `<C-g>` magic - it displays  file name and position. `<g><C-g>` will display number of words, num of lines and other useful stats.
+* The `<C-g>` magic - it displays  file name and position. `g<C-g>` will display number of words, num of lines and other useful stats.
 
 
 
@@ -125,7 +125,7 @@ Here's how it works
 
 
 ###### Autocomplete
-*Did you knew you also have autocomplete by default? While in insert mode press `<C-n>` or `<C-p>` to cycle through possible autocompletions. 
+* Did you knew you also have autocomplete by default? While in insert mode press `<C-n>` or `<C-p>` to cycle through possible autocompletions. 
 
 
 
@@ -143,7 +143,7 @@ Here's how it works
 
 
 ###### On the fly computations
-* You're deeply immersed into writting some cool code for your amazing program. Suddenly you have a hankering for some on the fly computations. You want to ... no, you **need** to calculate 42 multiplied by 42. Well sh*t. You have to stop your editing, pull up the calculator, do the calculations, copy them, go back to editing, and paste them. PHEW!!!
+* You're deeply immersed into writting some cool code for your amazing program. Suddenly you have a hankering for some on the fly computations. You want to ... no, you **need** to calculate 42 multiplied by 42. Well damn. You have to stop your editing, pull up the calculator, do the calculations, copy them, go back to editing, and paste them. PHEW!!!
 - Too much work.
 - Here's a simpler solution. While in Insert mode press `<C-r>=`. You will see an equal sign appearing in the bottom of the window. Enter your math formula - eg: `42*42` and press enter. The result will be magically inserted before cursor while still keeping you in insert mode. (the result is 1764 if you were curious).
 - Note of warning, certain operations such as `2^10` or `2**10` which you would expect to raise 2 to power of 10 don't work in that syntax. You'll have to use function instead, the `pow(2,10)` will raise 2 to power of 10.
@@ -152,7 +152,7 @@ Here's how it works
 
 
 ###### History of past searches
-* You search for various keywords in your code. After a while you want to search for some of those keywords again but you don't remember them exactly. No worries. Just press `q\` and you'll open a small window at the bottom containing your searches. Navigate with `jk` and press <CR> (Enter) to repeat the selected search. Or just close that window with `:q`
+* You search for various keywords in your code. After a while you want to search for some of those keywords again but you don't remember them exactly. No worries. Just press `q/` and you'll open a small window at the bottom containing your searches. Navigate with `jk` and press <CR> (Enter) to repeat the selected search. Or just close that window with `:q`
 
 
 ##### Useful selection of g commands
@@ -167,8 +167,8 @@ Here's how it works
 
 
 ##### Paste word under cursor
-* You're in  mode, trying to write a complex search & replace command. You want to search for the word "Supercalifragilisticexpialidocious" and replace it with "Super". Your fingers go on strike before you even start. What to do?. Well, assuming your cursor is on the said word you can paste that word in  mode by typing `<C-r><C-w>`. This will paste the word under the cursor. 
-- this is also useful when you haver words with tricky spelling.
+* You're in command  mode, trying to write a complex search & replace command. You want to search for the word "Supercalifragilisticexpialidocious" and replace it with "Super". Your fingers go on strike before you even start. What to do?. Well, assuming your cursor is on the said word you can paste that word in  mode by typing `<C-r><C-w>`. This will paste the word under the cursor. 
+- this is also useful when you have words with tricky spelling.
 
 
 ###### Create and use abbreviation.
@@ -281,7 +281,7 @@ I'm a long line, very vory long, YEAH.
 
 
 #### Quickly run an external command
-* It's coo to be able to run external terminal commands with `:%!sort` which passes all lines to sort and writes back the output. But there's a neat trick that will save you some time:
+* It's cool to be able to run external terminal commands with `:%!sort` which passes all lines to sort and writes back the output. But there's a neat trick that will save you some time:
 * `!5G` - will start writting an  command that looks like `:.,+4!`. You then will type your desired program `sort` and press enter. You start with `!` and then specify a motion from the current line `5G`. You can use other ranges, like `!4j` which will sort the following 4 lines from your current line.
 * An even faster shortcut is `!!`. This will pass the current line to the external program (and replace it with the output). A known use case of this is to quickly insert a timestamp into your document `!!date`
 
@@ -293,7 +293,7 @@ I'm a long line, very vory long, YEAH.
 
 #### Documentation at your fingertips
 * You're editing a bash file. You read the output from `find` and for each result you want to run an external script. You decide to use `xargs` instead of `-exec {} \;`. But as you write your command you find that you're rusty on xargs arguments. What to do?
-* You could put vim in foreground `<C-z>`, `man xargs`, `fg`. Or you could open a terminal inside vim with `:ter`, check the docs then close the window with `<C-c>`. 
+* You could put vim in foreground `<C-z>`, `man xargs`, `fg`. Or you could open a terminal inside vim with `:ter`, check the docs then close the window with `<C-w><C-c>`. 
 * But there are 2 better ways to do this.
 * Just press `K` (Shift+k) on the keyword you're interested in and Vim will open the relevant man page. If it's another type of file (not bash) vim will also try to find the help for that particular keyword. For example you could put your cursor on `pow()` in a python file, type `K` and vim will show you the docs. Pretty cool, eh? One keystroke and the docs are open! AWESOME!
 * But there's more. There is a filetype plugin which gives you an enhanced version of man. First install it with `:runtime! ftplugin/man.vim` (put it in your .vimrc if you want it open at startup).
@@ -313,7 +313,7 @@ I'm a long line, very vory long, YEAH.
 
 #### Put each word on a new line
 * Put all words from a line on a new line. eg: "hello world of vim" will be: "hello\n world\n of\n vim\n". How? With `:.!xargs -n1`. It says: send current line as stdin to xargs. You, xargs, split the line into args separated by blank space and `echo` at most one word. Then put the xargs output in place of the line. Since the output from xargs contains newlines this creates extra lines.
-* You could alos use a range, to put each word on the lines in range on a new line with `:1,5!xargs -n1`
+* You could also use a range, to put each word on the lines in range on a new line with `:1,5!xargs -n1`
 * NOTE - xargs separates words by spaces. Vim has a default different way of separating words which may or may not corespond with xargs. (see `:h isk`
 
 
@@ -353,8 +353,8 @@ vim
 
 #### Indent in Insert mode
 * You're probably using the indent operators in Normal mode (to shift your lines to the rigt/left an amount of space). `>>` and `<<` will shift left/right a line. `>` works with other motion and text objects: `>ap`, `>3j`, etc. (`gg>G` will shift right all lines in a file)
-* But if you're in Insetr mode it can be a pain to switch to Normal and back again.
-* It turns out you don't have to. You can use `<C-d>` and '<C-t>` to shift left/right right from Insert mode.
+* But if you're in Insert mode it can be a pain to switch to Normal and back again.
+* It turns out you don't have to. You can use `<C-d>` and `<C-t>` to shift left/right right from Insert mode.
 
 
 #### Smart folding
@@ -428,6 +428,6 @@ vim
 #### Count patterns
 * You're editing some source code left to you by your predecesor. It's messy. That fellow used to abbreviate troublesome variables with 'dbg_', like 'dbg_count', 'dbg_class', etc. Just how many of these variables are there? 
 * You can search for them with the substitute command. Shocking, I know. Check it out: `:%s/<dbg_//gni`.
-* This means: on all lines search for `<dbg_` (word start followed by 'dbg_'), replace with nothing (you could put a '&' but it's not needed), and use the following flags: g for global, i for case insensitive and n for no substitution. The 'n' flag is the trick here. It just prints how many matches there are without actually performing substitution.bbbbbbbbbbbbbbbbbbb
+* This means: on all lines search for `<dbg_` (word start followed by 'dbg_'), replace with nothing (you could put a '&' but it's not needed), and use the following flags: g for global, i for case insensitive and n for no substitution. The 'n' flag is the trick here. It just prints how many matches there are without actually performing substitution.
 
 
