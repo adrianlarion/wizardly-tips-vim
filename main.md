@@ -167,7 +167,7 @@ Here's how it works
 
 
 ##### Paste word under cursor
-* You're in ex mode, trying to write a complex search & replace command. You want to search for the word "Supercalifragilisticexpialidocious" and replace it with "Super". Your fingers go on strike before you even start. What to do?. Well, assuming your cursor is on the said word you can paste that word in ex mode by typing `<C-r><C-w>`. This will paste the word under the cursor. 
+* You're in  mode, trying to write a complex search & replace command. You want to search for the word "Supercalifragilisticexpialidocious" and replace it with "Super". Your fingers go on strike before you even start. What to do?. Well, assuming your cursor is on the said word you can paste that word in  mode by typing `<C-r><C-w>`. This will paste the word under the cursor. 
 - this is also useful when you haver words with tricky spelling.
 
 
@@ -254,9 +254,9 @@ set undodir=~/.vim/undo-dir
 set undofile
 ```
 
-#### Load teh previous ex command
-* You type a complex ex command. Later you want that command again. One option would be to use the arrow keys and cycle through history. That works but takes your hands from the home row position. 
-* Another way to load last ex command is `:<C-r>:`. That is: start by tyying colon, press Ctrl+R and type colon again. Colon is a register storing your last ex command. Ctrl+R outputs the contetns of a register.
+#### Load teh previous  command
+* You type a complex  command. Later you want that command again. One option would be to use the arrow keys and cycle through history. That works but takes your hands from the home row position. 
+* Another way to load last  command is `:<C-r>:`. That is: start by tyying colon, press Ctrl+R and type colon again. Colon is a register storing your last  command. Ctrl+R outputs the contetns of a register.
 
 
 #### Append your registers.
@@ -265,7 +265,7 @@ set undofile
 
 
 #### Range shortcut
-* Press `5:` and vim will type for you in the ex command line `:.,.+4` 
+* Press `5:` and vim will type for you in the  command line `:.,.+4` 
 
 
 #### Visual Block Syntax
@@ -282,7 +282,7 @@ I'm a long line, very vory long, YEAH.
 
 #### Quickly run an external command
 * It's coo to be able to run external terminal commands with `:%!sort` which passes all lines to sort and writes back the output. But there's a neat trick that will save you some time:
-* `!5G` - will start writting an ex command that looks like `:.,+4!`. You then will type your desired program `sort` and press enter. You start with `!` and then specify a motion from the current line `5G`. You can use other ranges, like `!4j` which will sort the following 4 lines from your current line.
+* `!5G` - will start writting an  command that looks like `:.,+4!`. You then will type your desired program `sort` and press enter. You start with `!` and then specify a motion from the current line `5G`. You can use other ranges, like `!4j` which will sort the following 4 lines from your current line.
 * An even faster shortcut is `!!`. This will pass the current line to the external program (and replace it with teh output). A known use case of this is to quickly insert a timestamp into your document `!!date`
 
 
@@ -301,6 +301,7 @@ I'm a long line, very vory long, YEAH.
 * That's cool but it's just half of the gooodness. The other half is this. Inside this man window put your curosr on a keyword. Now press either `\K` (backward slash followed by Shift+k) or `<C-]>`. If there exists a man for that keyword it will open inside the same page. Like a browser. THis functionality is NOT present in the default man pages. You can navigate back and forth with `<C-o>`, `<C-i>`
 * And for a last tip - you can use `\K` inside vim too on a keyword. Then vim will open the new and improved man page instead of the default documentation (whith opens with `K`)
 * BUT NOTE! the `:Man` command works only for man pages for linux, not other programming languages. That is if you press `\K` on 'pow' inside a python file you will get the man page for 'POW(3)' (linux programmer manual) and not python.
+
 
 #### Input/output with external commands.
 1. `:!date` - execute date command and print the results 
@@ -349,6 +350,79 @@ hello
 world of 
 vim
 ```
+
+#### Indent in Insert mode
+* You're probably using the indent operators in Normal mode (to shift your lines to the rigt/left an amount of space). `>>` and `<<` will shift left/right a line. `>` works with other motion and text objects: `>ap`, `>3j`, etc. (`gg>G` will shift right all lines in a file)
+* But if you're in Insetr mode it can be a pain to switch to Normal and back again.
+* It turns out you don't have to. You can use `<C-d>` and '<C-t>` to shift left/right right from Insert mode.
+
+
+#### Smart folding
+* Folding is great. Trouble is - it sucks doing it by hand. Wouldn't it be great of Vim automatically created folds based on the indent level? That would work nicely for most programming languages.
+* `:se foldmethod=indent` (instead of manual) and vim will automaticall fold based on 'shiftwidth' indents (if you change this setting in the middle of editing folding won't behave as expected)
+* Now use the usual shortcuts to manipulate folds (`<C-z>,<C-o>,<C-m>,<C-r>,etc`)
+
+
+#### Increment numbers
+* You're editing a file where you have years as dates. eg: "in 1825 the world...after 1841 something...". You receive a call from your editor/boss and he tells you that the dates are wrong. All years should be modified by adding 153 years to them. 
+* Damn. You're in no mood for mental math juggle. And you have lots of years. What to do?
+* Put your cursor over a year. Type `153<C-a>` (153 followed by Ctrl+a). Magically the year will be incremented by 153. Pretty cool. But you don't want to do this for all the years - you have hundreds of such dates. 
+* Use a macro. `ggqa`. Go to top of file, start recording. `/\<\d\d\d\d\>` and press Enter (to find years). `153<C-a>` (153 followed by Ctrl+a). `q` to stop recording. `:%norm @a` to apply this macro to all lines.
+
+
+#### Copy a protected file and edit it immediately.
+* You need to take a look and modify the dmesg file. Trouble is you can't if you started vim as a regular user - dmesg is owned by root. You could exit vim, make a copy, come back and re-open. 
+* Here's a one liner that will save you the hassle: `:exec '!cp /var/log/dmesg .' | e dmesg`. First it executes the copy command. The pipe operator (vertical bar) chains commands in vim  mode. Immediately after a edit command is issued.
+
+
+#### Comment a whole file (or a portion)
+* You open a long python script. You run it but you get errors. Darn. You decide to debug it by commenting it completely and uncomment sections as you see fit. 
+* Commeting by hand it's troublesome - there are 1520 lines. You could try some fancy stuff with a Visual Block and insert but that might not be the best way.
+* Instead you do `:%norm i#`. Kaboom - your whole script is commented out. Not smartly mind you (existing comments will be double commented) but it works nicely for your purposes. You can do the same for a .c file (or another file that supports these types of comments) with `:%norm i//`. You tell vim to execute a normal command across all lines (go to first char in line, even if it's empty and insert a comment)
+* If you want to comment a section just use  range `:1,50norm i#`. If you have a visual selection and you type the colon you'll be presented with `:'<,'>` which means a range between the start and the end of the visual selection. Then you just type `norm i#` after the already present command.
+* Using the same logic you could append semicolons to all lines in a file (or a range). Check it out: `%norm A;` - on all lines execute normal command A (which appends after the last char) and type a semicolon.
+
+#### Keep temp  commands in registers
+* You have a particularly useful  command which you use repeatedly. It is: `:-1,+1norm i#` - it comments out the current line, the line above and the line below. As you work you want to execute this command, now an then. But you don't like typing it out every time.
+* So instead you type the command in the text, just without the semicolon, on a new line: 
+```
+#bla bla
+-1,+1norm i#
+```
+* Put your cursor on the line where the command is and delete it in a register, say 'w'. `"wdd` (in register w store this line and delete it from text)
+* Now your register has your  command. But how to run it? 
+* Easy. Type `:@w` - where 'w' is your register. Press enter and you'll execute this command. 
+* Here's the explanation. When typing  commands a `@` sign in front of a letter signifies a register. the `@w` signifies the `w` register. When you type this special variable in  command window it just reads the contents of this register and executes it (after you press Enter).  
+* Fun fact. You can repeat your last  command with `:@:`. The register `:` stores the last command. `@:` is used to signify this register while entering a command (and pressing Enter afterwards so that the command executes)
+
+
+
+
+#### Open extra files with terminal commands like find
+* When you open vim with some files as arguments they are stored in `:args`. args are different from buffers. Buffers are all the buffers opened in memory and not necesarilly files. Args are the actual file args passed at startup. If you change the args the buffers stay untouched and viceversa. 
+* Think about `:args` as a temporary list of files which you can modify to your desire. You navigate files in args with `:next` and `:prev` (whereas you navigate buffers with `:bn` `:bp` `:bf` `:bl`). 
+* After you load vim and start editing some file you realize you have to also view some log files. What to do? 
+* One possible way is to create a new buffer with `:new`. Afterwards put into this buffer all the results from find with `:r !find /var/log -size +1M`. All the results will be placed in the new buffer, each file path on a new line. Just press `gf` on a line and vim will open teh file in a new window (and buffer). That's one approach.
+* Another is to just run 
+```
+:args `find /var/log -size +1M -name '*.py' \|\| true`
+```
+(OR)
+```
+:args `find /var/log -size +1M -name '*.py' \| xargs -n1`
+```
+* Now if you type `:args` you'll see it is populated by all the results from find. Now you can naviate quickly throug these files. 
+* Each method has drawbacks. Using this last approach you load all the results at once but the command is more tricky to type and your buffers may be overloaded. Using the first approach on the other hand will require you to go back to that new buffer and `gf` on each file you want opened. Choose what suits you best.
+* For more see `:h backtick-expansion`
+
+
+
+#### Format with care
+* You probably now about formatting with `gq`. You do things like `gggqG` to forma the whole file.
+* But `gq` will also move the cursor to the motion end range (eg; end of file). In order to format but keep the cursor where it is you use `gw` - just in the same way. Like `gggwG`.
+
+
+###
 
 
 #### Count patterns
