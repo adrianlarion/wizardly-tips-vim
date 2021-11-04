@@ -197,14 +197,14 @@ now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted
 - you can use this cool function for quickly displaying lines containing error codes, certain strings, etc. 
 
 
-##### Pattern searching tricks
+###### Pattern searching tricks
 * `/debug/1` - goes to the line below the line containing the pattern "debug". use another number for a negative offset or a larger offset. eg: `/debug/-4` -  4 lines above the line containing the debug pattern.
 * `/debug/e+1` - go to +1 char after the end of pattern "debug". eg: "debug3" will put the cursor on "3"
 * `/debug/b+3` - go to +3 chars after the beginning of pattern debug. In this case the cursor will be on "u" (not 'b' because counting starts at 0, where 0 char is the first char, in this case 'd')
 * If later you decide you need another offset use `//e+10` - where 'e+10' is your new offset but using the old seach pattern.
 
 
-#####  Use expression register to store and iterate
+###### Use expression register to store and iterate
 * You have a piece of code with the following word repeated 10 times: `var a1=42`. You want to have `var a1=42`, `var a2=42`, etc until `var a10=42`. How could you do that? By hand? NOOO.
 * First set a variable to 0. `:let i=0`
 * Now start to record a macro `qa` (record in register "a")
@@ -217,14 +217,14 @@ now in Insert mode type `sep` and press `<Tab>`. Your long separator is inserted
 * DONE.
 
 
-#####  Save and load your sessions.
+###### Save and load your sessions.
 * You are immersed into a highly complex editing session. You have log files, scripts, documentation and other files, all open in windows and tabs. Suddenly there's a computer crash. You open vim again but now you have to re-open all those files by hand (and place them in their various locations and windows). That sucks. 
 * Instead you can simply save your session. Type `:mks mysession` (where myssesion is your session file) to save your session to a file. Next time you boot up vim use `vim -S mysession` to load your session.
 * Or do it directly from vim. `:so mysession`
 
 
 
-#####  Go back in history.
+###### Go back in history.
 * You edit a bunch of files. After a couple of months you need to change  them again. Trouble is, you don't remember exactly what files you edited. 
 * Type `:ol` and vim will show you your history (of file edits).
 * To open one of these files type `:bro :ol` and choose a number coresponding to the desired file.
@@ -254,21 +254,21 @@ set undodir=~/.vim/undo-dir
 set undofile
 ```
 
-#### Load the previous  command
+###### Load the previous  command
 * You type a complex  command. Later you want that command again. One option would be to use the arrow keys and cycle through history. That works but takes your hands from the home row position. 
 * Another way to load last  command is `:<C-r>:`. That is: start by tyying colon, press Ctrl+R and type colon again. Colon is a register storing your last  command. Ctrl+R outputs the contetns of a register.
 
 
-#### Append your registers.
+###### Append your registers.
 * You open two important  documents. From one you start yanking important lines in a register. You go to the second document and paste but realize you missed a couple of lines. Damn. Now you have to yank all the lines and the ones you missed.
 * Or do you? Instead you can just append to the register in which you yanked. Simply yank in the uppercase version of the register and you will append (eg: if you yanked in `a` now you append by yanking in `A`
 
 
-#### Range shortcut
+###### Range shortcut
 * Press `5:` and vim will type for you in the  command line `:.,.+4` 
 
 
-#### Visual Block Syntax
+###### Visual Block Syntax
 * If you've used Vim for a while you know you can edit multiple lines at a time. Use Visual Block `<C-v>`, use a motion `3j`, insert some text `IHelloWorld` and press `<Esc>`. BAM! Your inserted text is typed on all lines. 
 * But here's the real trick which few people know. Let's say that your vertical line spans some short lines. Eg:
 ```
@@ -280,18 +280,18 @@ I'm a long line, very vory long, YEAH.
 * In order to remember think that `A` Append always writes text. 
 
 
-#### Quickly run an external command
+###### Quickly run an external command
 * It's cool to be able to run external terminal commands with `:%!sort` which passes all lines to sort and writes back the output. But there's a neat trick that will save you some time:
 * `!5G` - will start writting an  command that looks like `:.,+4!`. You then will type your desired program `sort` and press enter. You start with `!` and then specify a motion from the current line `5G`. You can use other ranges, like `!4j` which will sort the following 4 lines from your current line.
 * An even faster shortcut is `!!`. This will pass the current line to the external program (and replace it with the output). A known use case of this is to quickly insert a timestamp into your document `!!date`
 
 
-#### Replace with confirmation
+###### Replace with confirmation
 * You have document. In it you have a variable called "money". You want to rename it to "cash" but only for certain cases. In that case you should type: `:%s/\v<money>/cash/gc`.  This long winded command uses very magic `\v` so that you won't have to escape `<>`. Those chars mark the beginning and end of a word. We use them because you presumably want to replace only the instance of "money" and not "zamoney" or "moneys".  Finally the `c` flag will prompt a confirmaton dialogue each time an entry is found.
 * HINT - use `<C-e>` and `<C-y>` to scroll up and down so you can better see the context during the replace confirm dialogue.
 
 
-#### Documentation at your fingertips
+###### Documentation at your fingertips
 * You're editing a bash file. You read the output from `find` and for each result you want to run an external script. You decide to use `xargs` instead of `-exec {} \;`. But as you write your command you find that you're rusty on xargs arguments. What to do?
 * You could put vim in foreground `<C-z>`, `man xargs`, `fg`. Or you could open a terminal inside vim with `:ter`, check the docs then close the window with `<C-w><C-c>`. 
 * But there are 2 better ways to do this.
@@ -303,7 +303,7 @@ I'm a long line, very vory long, YEAH.
 * BUT NOTE! the `:Man` command works only for man pages for linux, not other programming languages. That is if you press `\K` on 'pow' inside a python file you will get the man page for 'POW(3)' (linux programmer manual) and not python.
 
 
-#### Input/output with external commands.
+###### Input/output with external commands.
 1. `:!date` - execute date command and print the results 
 2. `:r !date` - execute date command and append the output after range last line. If no range provided use current line. Thus the results from date will be appended after the current line in our case.
 3. `:w !date` - send all the lines as stdin to date command. Print the results (no insertion into current buffer)
@@ -311,20 +311,20 @@ I'm a long line, very vory long, YEAH.
 
 
 
-#### Put each word on a new line
+###### Put each word on a new line
 * Put all words from a line on a new line. eg: "hello world of vim" will be: "hello\n world\n of\n vim\n". How? With `:.!xargs -n1`. It says: send current line as stdin to xargs. You, xargs, split the line into args separated by blank space and `echo` at most one word. Then put the xargs output in place of the line. Since the output from xargs contains newlines this creates extra lines.
 * You could also use a range, to put each word on the lines in range on a new line with `:1,5!xargs -n1`
 * NOTE - xargs separates words by spaces. Vim has a default different way of separating words which may or may not corespond with xargs. (see `:h isk`
 
 
-#### Buffer delete
+###### Buffer delete
 * As you know buffers are usually contents of files loaded in memory, with extra info attached to them (marks, registers, etc). 
 * Let's say you decide to delete some buffers with `:bdel myverylongfile`. 5 minutes later you need again the buffer you deleted. Darn. What to do? You could try and remember the filename and reopen it. But what if there were lots of buffers you deleted and they havo complicated names?
 * Vim it's here to help you. Just type `:ls!` to show all buffers, even [u]nlisted ones. You'll see your deleted buffer listed (they'll have a 'u' indicator in front of them for unlisted). Turns out deleting a buffer makes it unlisted. 
 * If you really, really want to delete a buffer use `:bwipe`. 
 
 
-#### Autocomplete with files/lines
+###### Autocomplete with files/lines
 * You're editing a file. You have separator comments for sections, like `#DEBUG---------------------`. At some time you would like to insert that line into your current text. You could use a register but what if you have lots of types of separator comments (DEBUG, WIP, STABLE,etc)? Here's a better way:
 * Type `<C-x><C-l>` (Ctrl+x, Crl+l). The autocomplete will show you whole lines and you can choose your separator comment line. (in Insert mode)
 * <C-x><C-f>  will show you autocomplete options from the files in current directory. Quite cool.  (in Insert mode)
@@ -333,11 +333,11 @@ I'm a long line, very vory long, YEAH.
 * You can use the above feature in combination with `gf` or `<C-w>f`  to open the files under cursor in vim. Very flexible.
 
 
-#### Repeat your insert
+###### Repeat your insert
 * You start editing a file. You type rather long text containing a copyright comment. You enter Normal mode, you jump to the end of the file and see that you will have to enter the same line again (for some reason). 
 * Enter insert mode and press `<C-a>` - it'll insert the text you previously typed in Insert mode. 
 
-#### Better wrap
+###### Better wrap
 * After you set up the wrap option `:se wrap` you notice that words may be cut of in the middle at end of screen. Like so:
 ```
 hello wo
@@ -351,38 +351,38 @@ world of
 vim
 ```
 
-#### Indent in Insert mode
+###### Indent in Insert mode
 * You're probably using the indent operators in Normal mode (to shift your lines to the rigt/left an amount of space). `>>` and `<<` will shift left/right a line. `>` works with other motion and text objects: `>ap`, `>3j`, etc. (`gg>G` will shift right all lines in a file)
 * But if you're in Insert mode it can be a pain to switch to Normal and back again.
 * It turns out you don't have to. You can use `<C-d>` and `<C-t>` to shift left/right right from Insert mode.
 
 
-#### Smart folding
+###### Smart folding
 * Folding is great. Trouble is - it sucks doing it by hand. Wouldn't it be great of Vim automatically created folds based on the indent level? That would work nicely for most programming languages.
 * `:se foldmethod=indent` (instead of manual) and vim will automaticall fold based on 'shiftwidth' indents (if you change this setting in the middle of editing folding won't behave as expected)
 * Now use the usual shortcuts to manipulate folds (`<C-z>,<C-o>,<C-m>,<C-r>,etc`)
 
 
-#### Increment numbers
+###### Increment numbers
 * You're editing a file where you have years as dates. eg: "in 1825 the world...after 1841 something...". You receive a call from your editor/boss and he tells you that the dates are wrong. All years should be modified by adding 153 years to them. 
 * Damn. You're in no mood for mental math juggle. And you have lots of years. What to do?
 * Put your cursor over a year. Type `153<C-a>` (153 followed by Ctrl+a). Magically the year will be incremented by 153. Pretty cool. But you don't want to do this for all the years - you have hundreds of such dates. 
 * Use a macro. `ggqa`. Go to top of file, start recording. `/\<\d\d\d\d\>` and press Enter (to find years). `153<C-a>` (153 followed by Ctrl+a). `q` to stop recording. `:%norm @a` to apply this macro to all lines.
 
 
-#### Copy a protected file and edit it immediately.
+###### Copy a protected file and edit it immediately.
 * You need to take a look and modify the dmesg file. Trouble is you can't if you started vim as a regular user - dmesg is owned by root. You could exit vim, make a copy, come back and re-open. 
 * Here's a one liner that will save you the hassle: `:exec '!cp /var/log/dmesg .' | e dmesg`. First it executes the copy command. The pipe operator (vertical bar) chains commands in vim  mode. Immediately after a edit command is issued.
 
 
-#### Comment a whole file (or a portion)
+###### Comment a whole file (or a portion)
 * You open a long python script. You run it but you get errors. Darn. You decide to debug it by commenting it completely and uncomment sections as you see fit. 
 * Commeting by hand it's troublesome - there are 1520 lines. You could try some fancy stuff with a Visual Block and insert but that might not be the best way.
 * Instead you do `:%norm i#`. Kaboom - your whole script is commented out. Not smartly mind you (existing comments will be double commented) but it works nicely for your purposes. You can do the same for a .c file (or another file that supports these types of comments) with `:%norm i//`. You tell vim to execute a normal command across all lines (go to first char in line, even if it's empty and insert a comment)
 * If you want to comment a section just use  range `:1,50norm i#`. If you have a visual selection and you type the colon you'll be presented with `:'<,'>` which means a range between the start and the end of the visual selection. Then you just type `norm i#` after the already present command.
 * Using the same logic you could append semicolons to all lines in a file (or a range). Check it out: `%norm A;` - on all lines execute normal command A (which appends after the last char) and type a semicolon.
 
-#### Keep temp  commands in registers
+###### Keep temp  commands in registers
 * You have a particularly useful  command which you use repeatedly. It is: `:-1,+1norm i#` - it comments out the current line, the line above and the line below. As you work you want to execute this command, now an then. But you don't like typing it out every time.
 * So instead you type the command in the text, just without the semicolon, on a new line: 
 ```
@@ -398,7 +398,7 @@ vim
 
 
 
-#### Open extra files with terminal commands like find
+###### Open extra files with terminal commands like find
 * When you open vim with some files as arguments they are stored in `:args`. args are different from buffers. Buffers are all the buffers opened in memory and not necesarilly files. Args are the actual file args passed at startup. If you change the args the buffers stay untouched and viceversa. 
 * Think about `:args` as a temporary list of files which you can modify to your desire. You navigate files in args with `:next` and `:prev` (whereas you navigate buffers with `:bn` `:bp` `:bf` `:bl`). 
 * After you load vim and start editing some file you realize you have to also view some log files. What to do? 
@@ -417,7 +417,7 @@ vim
 
 
 
-#### Format with care
+###### Format with care
 * You probably now about formatting with `gq`. You do things like `gggqG` to forma the whole file.
 * But `gq` will also move the cursor to the motion end range (eg; end of file). In order to format but keep the cursor where it is you use `gw` - just in the same way. Like `gggwG`.
 
@@ -425,7 +425,7 @@ vim
 ###
 
 
-#### Count patterns
+###### patterns
 * You're editing some source code left to you by your predecesor. It's messy. That fellow used to abbreviate troublesome variables with 'dbg_', like 'dbg_count', 'dbg_class', etc. Just how many of these variables are there? 
 * You can search for them with the substitute command. Shocking, I know. Check it out: `:%s/<dbg_//gni`.
 * This means: on all lines search for `<dbg_` (word start followed by 'dbg_'), replace with nothing (you could put a '&' but it's not needed), and use the following flags: g for global, i for case insensitive and n for no substitution. The 'n' flag is the trick here. It just prints how many matches there are without actually performing substitution.
