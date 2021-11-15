@@ -4,6 +4,13 @@ This is a list of somewhat unknown but highly useful Vim tips and tricks. I try 
 
 
 
+# More guides that I wrote
+[simple-awk](https://github.com/adrianscheff/simple-awk) - A simple but practical guide to awk.
+<br>
+[useful-sed](https://github.com/adrianscheff/useful-sed) - Useful sed tips, techniques & tricks for daily usage
+<br>
+[quick-grep](https://github.com/adrianscheff/quick-grep) - Quick grep reference and tutorial.
+
 
 
 
@@ -437,5 +444,7 @@ vim
 
 ### Quickly edit and reload your .vimrc
 * You decide to make Vim behave exactly how you want it. You'll need to edit your .vimrc but that's alright. 
-* After you open vim you can open your .vimrc with `:e $MYVIMRC`. Easy! 
+* After you open vim you can open your .vimrc with `:e $MYVIMRC`. Easy!  
 * You've done your modification but now you want to see the effects. Just type `:so %` (source all lines) with .vimrc open and vim will source the new .vimrc.
+
+
